@@ -123,6 +123,7 @@ com/aipm/ai_project_management/modules/projects/repository/ProjectTeamMemberRepo
 com/aipm/ai_project_management/modules/notifications/service/NotificationService$NotificationStats.class
 com/aipm/ai_project_management/config/WebConfig$1.class
 com/aipm/ai_project_management/modules/auth/dto/RefreshTokenResponse$Builder.class
+com/aipm/ai_project_management/modules/auth/dto/PasswordStrengthResponse$Builder.class
 com/aipm/ai_project_management/config/SecurityConfig.class
 com/aipm/ai_project_management/modules/tasks/dto/TaskBoardDTO$TaskColumnDTO.class
 com/aipm/ai_project_management/modules/users/service/UserServiceImpl$1.class
@@ -193,6 +194,7 @@ com/aipm/ai_project_management/modules/dashboard/dto/admin/AdminDeadlinePredicti
 com/aipm/ai_project_management/modules/auth/service/AuthServiceImpl.class
 com/aipm/ai_project_management/modules/tasks/service/TaskService.class
 com/aipm/ai_project_management/modules/dashboard/dto/admin/AdminProjectHealthDTO.class
+com/aipm/ai_project_management/modules/auth/dto/PasswordStrengthResponse.class
 com/aipm/ai_project_management/modules/tasks/dto/UserSummaryDTO.class
 com/aipm/ai_project_management/modules/dashboard/dto/team/TeamTaskTodayDTO.class
 com/aipm/ai_project_management/modules/ai/service/AutomationRuleService.class
@@ -238,6 +240,7 @@ com/aipm/ai_project_management/modules/team/dto/TeamMemberDTO$Availability.class
 com/aipm/ai_project_management/modules/files/entity/FileAttachment.class
 com/aipm/ai_project_management/modules/auth/validation/AuthValidator.class
 com/aipm/ai_project_management/modules/clients/repository/ClientAddressRepository.class
+com/aipm/ai_project_management/modules/auth/service/AuthServiceImpl$1.class
 com/aipm/ai_project_management/modules/clients/service/ClientServiceImpl.class
 com/aipm/ai_project_management/modules/users/dto/UpdateUserSettingsRequest.class
 com/aipm/ai_project_management/common/response/SuccessResponse.class

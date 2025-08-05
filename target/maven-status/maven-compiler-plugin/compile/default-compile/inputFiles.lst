@@ -84,6 +84,7 @@
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/AiProjectManagementSoftwareApplication.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/auth/dto/RefreshTokenRequest.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/tasks/repository/SubtaskRepository.java
+/home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/auth/dto/PasswordStrengthResponse.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/tasks/controller/TaskController.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/dashboard/dto/admin/AdminKpiMetricsDTO.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/common/exceptions/UnauthorizedException.java

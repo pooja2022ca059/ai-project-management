@@ -2,6 +2,7 @@ package com.aipm.ai_project_management.modules.auth.controller;
 
 import com.aipm.ai_project_management.common.response.ApiResponse;
 import com.aipm.ai_project_management.modules.auth.dto.ForgotPasswordRequest;
+import com.aipm.ai_project_management.modules.auth.dto.PasswordStrengthResponse;
 import com.aipm.ai_project_management.modules.auth.dto.ResetPasswordRequest;
 import com.aipm.ai_project_management.modules.auth.service.PasswordService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -51,6 +52,17 @@ public class PasswordController {
         
         // Using ApiResponse without the builder pattern
         ApiResponse<String> response = new ApiResponse<>(true, "Password reset successfully", null);
+        return ResponseEntity.ok(response);
+    }
+    
+    @PostMapping("/password-strength")
+    @Operation(summary = "Evaluate password strength", description = "Check password strength and get improvement suggestions")
+    public ResponseEntity<ApiResponse<PasswordStrengthResponse>> evaluatePasswordStrength(
+            @RequestBody String password) {
+        
+        PasswordStrengthResponse strengthResponse = passwordService.evaluatePasswordStrength(password);
+        
+        ApiResponse<PasswordStrengthResponse> response = new ApiResponse<>(true, "Password strength evaluated", strengthResponse);
         return ResponseEntity.ok(response);
     }
     
