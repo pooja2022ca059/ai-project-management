@@ -1,8 +1,18 @@
 package com.aipm.ai_project_management.modules.tasks.service.impl;
 
 import com.aipm.ai_project_management.common.enums.TaskStatus;
+import com.aipm.ai_project_management.common.exceptions.ResourceNotFoundException;
 import com.aipm.ai_project_management.modules.tasks.dto.*;
+import com.aipm.ai_project_management.modules.tasks.entity.Task;
+import com.aipm.ai_project_management.modules.tasks.entity.Subtask;
+import com.aipm.ai_project_management.modules.tasks.entity.TaskDependency;
+import com.aipm.ai_project_management.modules.tasks.repository.TaskRepository;
+import com.aipm.ai_project_management.modules.tasks.repository.SubtaskRepository;
+import com.aipm.ai_project_management.modules.tasks.repository.TaskDependencyRepository;
+import com.aipm.ai_project_management.modules.projects.repository.ProjectRepository;
+import com.aipm.ai_project_management.modules.auth.repository.UserRepository;
 import com.aipm.ai_project_management.modules.tasks.service.TaskService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -11,9 +21,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -21,49 +33,112 @@ public class TaskServiceImpl implements TaskService {
 
     private static final Logger logger = Logger.getLogger(TaskServiceImpl.class.getName());
 
-    // TODO: Add repository dependencies here
-    // private final TaskRepository taskRepository;
-    // private final ProjectRepository projectRepository;
-    // private final UserRepository userRepository;
+    @Autowired
+    private TaskRepository taskRepository;
     
-    // Constructor
-    public TaskServiceImpl() {
-        // TODO: Add repository injection when repositories are created
-    }
+    @Autowired
+    private SubtaskRepository subtaskRepository;
+    
+    @Autowired
+    private TaskDependencyRepository taskDependencyRepository;
+    
+    @Autowired
+    private ProjectRepository projectRepository;
+    
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public TaskDTO createTask(CreateTaskRequest request) {
         logger.info("Creating task for project: " + request.getProjectId());
         
-        // TODO: Implement task creation logic
         // 1. Validate project exists
-        // 2. Create task entity
-        // 3. Save to database
-        // 4. Convert to DTO and return
+        if (!projectRepository.existsById(request.getProjectId())) {
+            throw new ResourceNotFoundException("Project not found with id: " + request.getProjectId());
+        }
         
-        // Temporary implementation - replace with actual logic
-        TaskDTO taskDTO = new TaskDTO();
-        taskDTO.setId(1L);
-        taskDTO.setTitle(request.getTitle());
-        taskDTO.setDescription(request.getDescription());
-        taskDTO.setStatus(TaskStatus.TODO);
-        taskDTO.setCreatedAt(LocalDateTime.now());
+        // 2. Validate reporter exists
+        if (!userRepository.existsById(request.getReporterId())) {
+            throw new ResourceNotFoundException("Reporter not found with id: " + request.getReporterId());
+        }
         
-        return taskDTO;
+        // 3. Validate assignee exists if provided
+        if (request.getAssigneeId() != null && !userRepository.existsById(request.getAssigneeId())) {
+            throw new ResourceNotFoundException("Assignee not found with id: " + request.getAssigneeId());
+        }
+        
+        // 4. Create task entity
+        Task task = new Task();
+        task.setTitle(request.getTitle());
+        task.setDescription(request.getDescription());
+        task.setStatus(request.getStatus() != null ? request.getStatus() : TaskStatus.TODO);
+        task.setPriority(request.getPriority());
+        task.setProjectId(request.getProjectId());
+        task.setReporterId(request.getReporterId());
+        task.setAssigneeId(request.getAssigneeId());
+        task.setDueDate(request.getDueDate());
+        task.setEstimatedHours(request.getEstimatedHours());
+        task.setProgress(0);
+        task.setLoggedHours(0.0);
+        
+        if (request.getLabels() != null) {
+            task.setLabels(request.getLabels());
+        }
+        
+        // 5. Save to database
+        Task savedTask = taskRepository.save(task);
+        
+        // 6. Create subtasks if provided
+        if (request.getSubtasks() != null && !request.getSubtasks().isEmpty()) {
+            for (CreateTaskRequest.SubtaskRequest subtaskRequest : request.getSubtasks()) {
+                CreateSubtaskRequest createSubtaskRequest = new CreateSubtaskRequest();
+                createSubtaskRequest.setTitle(subtaskRequest.getTitle());
+                createSubtaskRequest.setAssigneeId(subtaskRequest.getAssigneeId());
+                createSubtask(savedTask.getId(), createSubtaskRequest);
+            }
+        }
+        
+        // 7. Create dependencies if provided
+        if (request.getDependencies() != null && !request.getDependencies().isEmpty()) {
+            for (Long dependencyTaskId : request.getDependencies()) {
+                Task dependencyTask = taskRepository.findById(dependencyTaskId).orElse(null);
+                if (dependencyTask != null) {
+                    TaskDependency dependency = new TaskDependency();
+                    dependency.setDependentTask(savedTask);
+                    dependency.setDependencyTask(dependencyTask);
+                    dependency.setDependencyType("FINISH_TO_START");
+                    taskDependencyRepository.save(dependency);
+                }
+            }
+        }
+        
+        return convertToTaskDTO(savedTask);
     }
 
     @Override
     public SubtaskDTO createSubtask(Long taskId, CreateSubtaskRequest request) {
         logger.info("Creating subtask for task: " + taskId);
         
-        // TODO: Implement subtask creation logic
-        SubtaskDTO subtaskDTO = new SubtaskDTO();
-        subtaskDTO.setId(1L);
-        subtaskDTO.setTaskId(taskId);
-        subtaskDTO.setTitle(request.getTitle());
-        subtaskDTO.setCompleted(false);
+        // 1. Validate task exists
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + taskId));
         
-        return subtaskDTO;
+        // 2. Validate assignee exists if provided
+        if (request.getAssigneeId() != null && !userRepository.existsById(request.getAssigneeId())) {
+            throw new ResourceNotFoundException("Assignee not found with id: " + request.getAssigneeId());
+        }
+        
+        // 3. Create subtask entity
+        Subtask subtask = new Subtask();
+        subtask.setTask(task);
+        subtask.setTitle(request.getTitle());
+        subtask.setStatus(TaskStatus.TODO); // Default status
+        subtask.setAssigneeId(request.getAssigneeId());
+        
+        // 4. Save to database
+        Subtask savedSubtask = subtaskRepository.save(subtask);
+        
+        return convertToSubtaskDTO(savedSubtask);
     }
 
     @Override
@@ -71,13 +146,10 @@ public class TaskServiceImpl implements TaskService {
     public TaskDTO getTaskById(Long id) {
         logger.info("Fetching task by id: " + id);
         
-        // TODO: Implement task retrieval logic
-        TaskDTO taskDTO = new TaskDTO();
-        taskDTO.setId(id);
-        taskDTO.setTitle("Sample Task");
-        taskDTO.setStatus(TaskStatus.TODO);
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
         
-        return taskDTO;
+        return convertToTaskDTO(task);
     }
 
     @Override
@@ -85,18 +157,85 @@ public class TaskServiceImpl implements TaskService {
     public TaskDetailDTO getTaskDetails(Long id) {
         logger.info("Fetching task details for id: " + id);
         
-        // TODO: Implement detailed task retrieval logic
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
+        
         TaskDetailDTO taskDetailDTO = new TaskDetailDTO();
-        taskDetailDTO.setId(id);
-        taskDetailDTO.setTitle("Sample Task Details");
-        taskDetailDTO.setDescription("Sample Description");
-        taskDetailDTO.setStatus(TaskStatus.TODO);
-        taskDetailDTO.setCreatedAt(LocalDateTime.now());
-        taskDetailDTO.setSubtasks(new ArrayList<>());
-        taskDetailDTO.setComments(new ArrayList<>());
+        taskDetailDTO.setId(task.getId());
+        taskDetailDTO.setTitle(task.getTitle());
+        taskDetailDTO.setDescription(task.getDescription());
+        taskDetailDTO.setStatus(task.getStatus());
+        taskDetailDTO.setPriority(task.getPriority());
+        taskDetailDTO.setDueDate(task.getDueDate());
+        taskDetailDTO.setEstimatedHours(task.getEstimatedHours());
+        taskDetailDTO.setLoggedHours(task.getLoggedHours());
+        taskDetailDTO.setProgress(task.getProgress());
+        taskDetailDTO.setLabels(task.getLabels());
+        taskDetailDTO.setCreatedAt(task.getCreatedAt());
+        taskDetailDTO.setUpdatedAt(task.getUpdatedAt());
+        
+        // Convert subtasks
+        List<SubtaskDTO> subtasks = task.getSubtasks().stream()
+                .map(this::convertToSubtaskDTO)
+                .collect(Collectors.toList());
+        taskDetailDTO.setSubtasks(subtasks);
+        
+        // Convert comments to CommentDTO (not TaskCommentDTO)
+        List<CommentDTO> comments = task.getComments().stream()
+                .map(this::convertToCommentDTO)
+                .collect(Collectors.toList());
+        taskDetailDTO.setComments(comments);
+        
+        // For now, we'll set attachments as empty list since there's no attachment entity
         taskDetailDTO.setAttachments(new ArrayList<>());
         
         return taskDetailDTO;
+    }
+    
+    // Helper method to convert Task entity to TaskDTO
+    private TaskDTO convertToTaskDTO(Task task) {
+        TaskDTO dto = new TaskDTO();
+        dto.setId(task.getId());
+        dto.setTitle(task.getTitle());
+        dto.setDescription(task.getDescription());
+        dto.setStatus(task.getStatus());
+        dto.setPriority(task.getPriority());
+        dto.setProjectId(task.getProjectId());
+        dto.setAssigneeId(task.getAssigneeId());
+        dto.setDueDate(task.getDueDate());
+        dto.setEstimatedHours(task.getEstimatedHours());
+        dto.setLoggedHours(task.getLoggedHours());
+        dto.setProgress(task.getProgress());
+        dto.setLabels(task.getLabels());
+        dto.setCreatedAt(task.getCreatedAt());
+        dto.setUpdatedAt(task.getUpdatedAt());
+        return dto;
+    }
+    
+    // Helper method to convert Subtask entity to SubtaskDTO
+    private SubtaskDTO convertToSubtaskDTO(Subtask subtask) {
+        SubtaskDTO dto = new SubtaskDTO();
+        dto.setId(subtask.getId());
+        dto.setTaskId(subtask.getTask().getId());
+        dto.setTitle(subtask.getTitle());
+        dto.setStatus(subtask.getStatus());
+        dto.setCompleted(subtask.getStatus() == TaskStatus.DONE);
+        dto.setCompletedAt(subtask.getCompletedAt());
+        dto.setCreatedAt(subtask.getCreatedAt());
+        dto.setUpdatedAt(subtask.getUpdatedAt());
+        return dto;
+    }
+    
+    // Helper method to convert TaskComment entity to CommentDTO
+    private CommentDTO convertToCommentDTO(com.aipm.ai_project_management.modules.tasks.entity.TaskComment comment) {
+        CommentDTO dto = new CommentDTO();
+        dto.setId(comment.getId());
+        dto.setTaskId(comment.getTask().getId());
+        dto.setUserId(comment.getAuthorId());
+        dto.setContent(comment.getContent());
+        dto.setCreatedAt(comment.getCreatedAt());
+        dto.setUpdatedAt(comment.getUpdatedAt());
+        return dto;
     }
 
     @Override
@@ -104,20 +243,26 @@ public class TaskServiceImpl implements TaskService {
     public Page<TaskDTO> getTasksByProjectId(Long projectId, Map<String, String> filters, Pageable pageable) {
         logger.info("Fetching tasks for project: " + projectId + " with filters: " + filters);
         
-        // TODO: Implement project tasks retrieval with filtering
-        List<TaskDTO> tasks = new ArrayList<>();
-        
-        // Sample data - replace with actual database query
-        for (int i = 1; i <= 5; i++) {
-            TaskDTO task = new TaskDTO();
-            task.setId((long) i);
-            task.setTitle("Task " + i);
-            task.setProjectId(projectId);
-            task.setStatus(TaskStatus.TODO);
-            tasks.add(task);
+        // Validate project exists
+        if (!projectRepository.existsById(projectId)) {
+            throw new ResourceNotFoundException("Project not found with id: " + projectId);
         }
         
-        return new PageImpl<>(tasks, pageable, tasks.size());
+        Page<Task> tasksPage;
+        
+        // Apply filters if provided
+        if (filters != null && filters.containsKey("status")) {
+            TaskStatus status = TaskStatus.valueOf(filters.get("status").toUpperCase());
+            tasksPage = taskRepository.findByProjectIdAndStatus(projectId, status, pageable);
+        } else {
+            tasksPage = taskRepository.findByProjectId(projectId, pageable);
+        }
+        
+        List<TaskDTO> taskDTOs = tasksPage.getContent().stream()
+                .map(this::convertToTaskDTO)
+                .collect(Collectors.toList());
+        
+        return new PageImpl<>(taskDTOs, pageable, tasksPage.getTotalElements());
     }
 
     @Override
@@ -139,89 +284,158 @@ public class TaskServiceImpl implements TaskService {
     public Page<TaskDTO> getTasksAssignedToUser(Long userId, Map<String, String> filters, Pageable pageable) {
         logger.info("Fetching tasks assigned to user: " + userId + " with filters: " + filters);
         
-        // TODO: Implement user tasks retrieval
-        List<TaskDTO> tasks = new ArrayList<>();
-        return new PageImpl<>(tasks, pageable, tasks.size());
+        // Validate user exists
+        if (!userRepository.existsById(userId)) {
+            throw new ResourceNotFoundException("User not found with id: " + userId);
+        }
+        
+        Page<Task> tasksPage;
+        
+        // Apply filters if provided
+        if (filters != null && filters.containsKey("status")) {
+            TaskStatus status = TaskStatus.valueOf(filters.get("status").toUpperCase());
+            tasksPage = taskRepository.findByAssigneeIdAndStatus(userId, status, pageable);
+        } else {
+            tasksPage = taskRepository.findByAssigneeId(userId, pageable);
+        }
+        
+        List<TaskDTO> taskDTOs = tasksPage.getContent().stream()
+                .map(this::convertToTaskDTO)
+                .collect(Collectors.toList());
+        
+        return new PageImpl<>(taskDTOs, pageable, tasksPage.getTotalElements());
     }
 
     @Override
     public TaskDTO updateTask(Long id, UpdateTaskRequest request) {
         logger.info("Updating task: " + id);
         
-        // TODO: Implement task update logic
         // 1. Find existing task
-        // 2. Update fields
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
+        
+        // 2. Update fields if provided
+        if (request.getTitle() != null) {
+            task.setTitle(request.getTitle());
+        }
+        if (request.getDescription() != null) {
+            task.setDescription(request.getDescription());
+        }
+        if (request.getStatus() != null) {
+            task.setStatus(request.getStatus());
+        }
+        if (request.getPriority() != null) {
+            task.setPriority(request.getPriority());
+        }
+        if (request.getAssigneeId() != null) {
+            // Validate assignee exists
+            if (!userRepository.existsById(request.getAssigneeId())) {
+                throw new ResourceNotFoundException("Assignee not found with id: " + request.getAssigneeId());
+            }
+            task.setAssigneeId(request.getAssigneeId());
+        }
+        if (request.getDueDate() != null) {
+            task.setDueDate(request.getDueDate());
+        }
+        if (request.getEstimatedHours() != null) {
+            task.setEstimatedHours(request.getEstimatedHours());
+        }
+        if (request.getProgress() != null) {
+            task.setProgress(request.getProgress());
+        }
+        if (request.getLabels() != null) {
+            task.setLabels(request.getLabels());
+        }
+        
         // 3. Save to database
-        // 4. Return updated DTO
+        Task updatedTask = taskRepository.save(task);
         
-        TaskDTO taskDTO = new TaskDTO();
-        taskDTO.setId(id);
-        taskDTO.setTitle(request.getTitle());
-        taskDTO.setDescription(request.getDescription());
-        taskDTO.setUpdatedAt(LocalDateTime.now());
-        
-        return taskDTO;
+        return convertToTaskDTO(updatedTask);
     }
 
     @Override
     public TaskDTO updateTaskStatus(Long id, TaskStatus status) {
         logger.info("Updating task status: " + id + " to " + status);
         
-        // TODO: Implement status update logic
-        TaskDTO taskDTO = new TaskDTO();
-        taskDTO.setId(id);
-        taskDTO.setStatus(status);
-        taskDTO.setUpdatedAt(LocalDateTime.now());
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
         
-        return taskDTO;
+        task.setStatus(status);
+        
+        // Auto-update progress based on status
+        if (status == TaskStatus.DONE) {
+            task.setProgress(100);
+        } else if (status == TaskStatus.IN_PROGRESS && task.getProgress() == 0) {
+            task.setProgress(10); // Set to 10% when starting work
+        }
+        
+        Task updatedTask = taskRepository.save(task);
+        return convertToTaskDTO(updatedTask);
     }
 
     @Override
     public TaskDTO assignTask(Long taskId, Long userId) {
         logger.info("Assigning task: " + taskId + " to user: " + userId);
         
-        // TODO: Implement task assignment logic
-        TaskDTO taskDTO = new TaskDTO();
-        taskDTO.setId(taskId);
-        taskDTO.setAssigneeId(userId);
-        taskDTO.setUpdatedAt(LocalDateTime.now());
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + taskId));
         
-        return taskDTO;
+        // Validate user exists
+        if (!userRepository.existsById(userId)) {
+            throw new ResourceNotFoundException("User not found with id: " + userId);
+        }
+        
+        task.setAssigneeId(userId);
+        Task updatedTask = taskRepository.save(task);
+        
+        return convertToTaskDTO(updatedTask);
     }
 
     @Override
     public TaskDTO updateTaskProgress(Long taskId, Integer progress) {
         logger.info("Updating task progress: " + taskId + " to " + progress + "%");
         
-        // TODO: Implement progress update logic
-        TaskDTO taskDTO = new TaskDTO();
-        taskDTO.setId(taskId);
-        taskDTO.setProgress(progress);
-        taskDTO.setUpdatedAt(LocalDateTime.now());
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + taskId));
         
-        return taskDTO;
+        task.setProgress(progress);
+        
+        // Auto-update status based on progress
+        if (progress == 100 && task.getStatus() != TaskStatus.DONE) {
+            task.setStatus(TaskStatus.DONE);
+        } else if (progress > 0 && progress < 100 && task.getStatus() == TaskStatus.TODO) {
+            task.setStatus(TaskStatus.IN_PROGRESS);
+        }
+        
+        Task updatedTask = taskRepository.save(task);
+        return convertToTaskDTO(updatedTask);
     }
 
     @Override
     public void deleteTask(Long id) {
         logger.info("Deleting task: " + id);
         
-        // TODO: Implement task deletion logic
-        // 1. Check if task exists
-        // 2. Handle cascade deletes (subtasks, comments, etc.)
-        // 3. Delete from database
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
+        
+        // The cascade settings in the entity will handle deletion of subtasks, comments, etc.
+        taskRepository.delete(task);
     }
 
     @Override
     public List<TaskDTO> bulkUpdateTaskStatus(List<Long> taskIds, TaskStatus status) {
         logger.info("Bulk updating " + taskIds.size() + " tasks to status: " + status);
         
-        // TODO: Implement bulk status update
         List<TaskDTO> updatedTasks = new ArrayList<>();
         
         for (Long taskId : taskIds) {
-            TaskDTO task = updateTaskStatus(taskId, status);
-            updatedTasks.add(task);
+            try {
+                TaskDTO task = updateTaskStatus(taskId, status);
+                updatedTasks.add(task);
+            } catch (ResourceNotFoundException e) {
+                logger.warning("Task not found during bulk update: " + taskId);
+                // Continue with other tasks
+            }
         }
         
         return updatedTasks;
@@ -232,9 +446,18 @@ public class TaskServiceImpl implements TaskService {
     public Page<TaskDTO> searchTasks(Long projectId, String searchTerm, Pageable pageable) {
         logger.info("Searching tasks in project: " + projectId + " with term: " + searchTerm);
         
-        // TODO: Implement task search logic
-        List<TaskDTO> tasks = new ArrayList<>();
-        return new PageImpl<>(tasks, pageable, tasks.size());
+        // Validate project exists
+        if (!projectRepository.existsById(projectId)) {
+            throw new ResourceNotFoundException("Project not found with id: " + projectId);
+        }
+        
+        Page<Task> tasksPage = taskRepository.searchByProjectId(projectId, searchTerm, pageable);
+        
+        List<TaskDTO> taskDTOs = tasksPage.getContent().stream()
+                .map(this::convertToTaskDTO)
+                .collect(Collectors.toList());
+        
+        return new PageImpl<>(taskDTOs, pageable, tasksPage.getTotalElements());
     }
 
     @Override
@@ -242,8 +465,14 @@ public class TaskServiceImpl implements TaskService {
     public List<TaskDTO> getOverdueTasks() {
         logger.info("Fetching overdue tasks");
         
-        // TODO: Implement overdue tasks logic
-        return new ArrayList<>();
+        LocalDateTime now = LocalDateTime.now();
+        List<TaskStatus> completedStatuses = Arrays.asList(TaskStatus.DONE, TaskStatus.CANCELLED);
+        
+        List<Task> overdueTasks = taskRepository.findOverdueTasks(now, completedStatuses);
+        
+        return overdueTasks.stream()
+                .map(this::convertToTaskDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -251,7 +480,20 @@ public class TaskServiceImpl implements TaskService {
     public List<TaskDTO> getUpcomingDeadlines(Integer days) {
         logger.info("Fetching tasks with deadlines in next " + days + " days");
         
-        // TODO: Implement upcoming deadlines logic
-        return new ArrayList<>();
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime futureDate = now.plusDays(days);
+        
+        // We'll need to add this method to the repository
+        // For now, let's use a simple approach
+        List<Task> allTasks = taskRepository.findAll();
+        List<Task> upcomingTasks = allTasks.stream()
+                .filter(task -> task.getDueDate() != null)
+                .filter(task -> task.getDueDate().isAfter(now) && task.getDueDate().isBefore(futureDate))
+                .filter(task -> task.getStatus() != TaskStatus.DONE && task.getStatus() != TaskStatus.CANCELLED)
+                .collect(Collectors.toList());
+        
+        return upcomingTasks.stream()
+                .map(this::convertToTaskDTO)
+                .collect(Collectors.toList());
     }
 }
