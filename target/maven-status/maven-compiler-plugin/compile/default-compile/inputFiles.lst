@@ -17,6 +17,7 @@
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/auth/service/AuthServiceImpl.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/auth/security/UserPrincipal.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/common/response/SuccessResponse.java
+/home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/shared/entity/NotificationEntity.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/tasks/repository/TaskCommentRepository.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/auth/entity/User.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/auth/dto/UserDto.java
@@ -43,6 +44,7 @@
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/team/entity/TeamMember.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/users/service/UserService.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/common/response/ApiResponse.java
+/home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/files/controller/FileUploadController.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/team/entity/UserPerformance.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/users/dto/UserSettingsDTO.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/projects/repository/ProjectTeamMemberRepository.java
@@ -63,6 +65,7 @@
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/auth/dto/LoginRequest.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/tasks/repository/TimeTrackingRepository.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/team/dto/TeamMemberDTO.java
+/home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/notifications/controller/NotificationController.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/dashboard/service/DashboardService.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/tasks/service/TaskCommentService.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/auth/repository/PasswordResetTokenRepository.java
@@ -73,6 +76,7 @@
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/dashboard/dto/admin/AdminDeadlinePredictionDTO.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/auth/dto/RegisterRequest.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/projects/dto/ProjectStatsDto.java
+/home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/shared/entity/AutomationRuleEntity.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/projects/controller/ProjectController.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/clients/dto/ClientDTO.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/team/dto/ProjectSummaryDTO.java
@@ -81,6 +85,7 @@
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/auth/entity/UserSession.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/tasks/dto/TaskCommentDTO.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/dashboard/controller/DashboardController.java
+/home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/shared/entity/AiInsightEntity.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/tasks/dto/CommentDTO.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/tasks/controller/TimeTrackingController.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/users/entity/UserPreference.java
@@ -133,6 +138,7 @@
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/AiProjectManagementSoftwareApplication.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/tasks/service/impl/TaskCommentServiceImpl.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/auth/dto/RefreshTokenRequest.java
+/home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/analytics/controller/AnalyticsController.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/tasks/repository/SubtaskRepository.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/dashboard/dto/team/TeamTaskTodayDTO.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/tasks/controller/TaskController.java
@@ -171,6 +177,7 @@
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/auth/repository/UserRepository.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/tasks/controller/TaskCommentController.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/common/enums/ProjectStatus.java
+/home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/shared/entity/ProjectTemplateEntity.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/dashboard/dto/admin/AdminRiskAlertDTO.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/auth/service/PasswordServiceImpl.java
 /home/runner/work/ai-project-management/ai-project-management/src/main/java/com/aipm/ai_project_management/modules/dashboard/mapper/DashboardMapper.java
