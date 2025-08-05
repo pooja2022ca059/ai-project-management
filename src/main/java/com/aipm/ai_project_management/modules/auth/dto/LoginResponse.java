@@ -19,16 +19,20 @@ public class LoginResponse {
     @JsonProperty("expires_at")
     private LocalDateTime expiresAt;
     
+    @JsonProperty("redirect_url")
+    private String redirectUrl;
+    
     // Default constructor
     public LoginResponse() {
     }
     
     // All-args constructor
-    public LoginResponse(String token, String refreshToken, UserDTO user, LocalDateTime expiresAt) {
+    public LoginResponse(String token, String refreshToken, UserDTO user, LocalDateTime expiresAt, String redirectUrl) {
         this.token = token;
         this.refreshToken = refreshToken;
         this.user = user;
         this.expiresAt = expiresAt;
+        this.redirectUrl = redirectUrl;
     }
     
     // Getters and setters
@@ -64,6 +68,14 @@ public class LoginResponse {
         this.expiresAt = expiresAt;
     }
     
+    public String getRedirectUrl() {
+        return redirectUrl;
+    }
+    
+    public void setRedirectUrl(String redirectUrl) {
+        this.redirectUrl = redirectUrl;
+    }
+    
     // equals method
     @Override
     public boolean equals(Object o) {
@@ -73,13 +85,14 @@ public class LoginResponse {
         return Objects.equals(token, that.token) &&
                 Objects.equals(refreshToken, that.refreshToken) &&
                 Objects.equals(user, that.user) &&
-                Objects.equals(expiresAt, that.expiresAt);
+                Objects.equals(expiresAt, that.expiresAt) &&
+                Objects.equals(redirectUrl, that.redirectUrl);
     }
     
     // hashCode method
     @Override
     public int hashCode() {
-        return Objects.hash(token, refreshToken, user, expiresAt);
+        return Objects.hash(token, refreshToken, user, expiresAt, redirectUrl);
     }
     
     // toString method
@@ -90,6 +103,7 @@ public class LoginResponse {
                 ", refreshToken='" + (refreshToken != null ? "[PRESENT]" : "[NOT PRESENT]") + '\'' +
                 ", user=" + user +
                 ", expiresAt=" + expiresAt +
+                ", redirectUrl='" + redirectUrl + '\'' +
                 '}';
     }
     
@@ -103,6 +117,7 @@ public class LoginResponse {
         private String refreshToken;
         private UserDTO user;
         private LocalDateTime expiresAt;
+        private String redirectUrl;
         
         public Builder token(String token) {
             this.token = token;
@@ -124,8 +139,13 @@ public class LoginResponse {
             return this;
         }
         
+        public Builder redirectUrl(String redirectUrl) {
+            this.redirectUrl = redirectUrl;
+            return this;
+        }
+        
         public LoginResponse build() {
-            return new LoginResponse(token, refreshToken, user, expiresAt);
+            return new LoginResponse(token, refreshToken, user, expiresAt, redirectUrl);
         }
     }
     

@@ -93,6 +93,7 @@ public class AuthServiceImpl implements AuthService {
                     .refreshToken(refreshToken)
                     .user(LoginResponse.UserDTO.fromUser(user))
                     .expiresAt(jwtTokenProvider.getTokenExpiration())
+                    .redirectUrl(determineRedirectUrl(user.getRole()))
                     .build();
             
         } catch (Exception e) {
@@ -146,5 +147,20 @@ public class AuthServiceImpl implements AuthService {
     public void logoutAllDevices(Long userId) {
         sessionRepository.revokeAllUserSessions(userId, LocalDateTime.now(), "Logout from all devices");
         log.info("All sessions revoked for user {}", userId);
+    }
+    
+    private String determineRedirectUrl(UserRole userRole) {
+        switch (userRole) {
+            case ADMIN:
+                return "/admin/dashboard";
+            case PROJECT_MANAGER:
+                return "/manager/dashboard";
+            case TEAM_MEMBER:
+                return "/user/dashboard";
+            case CLIENT:
+                return "/client-portal/dashboard";
+            default:
+                return "/user/dashboard";
+        }
     }
 }

@@ -17,6 +17,8 @@ public interface ProjectMilestoneRepository extends JpaRepository<ProjectMilesto
     // Find milestones by project
     Page<ProjectMilestone> findByProjectId(Long projectId, Pageable pageable);
     
+    List<ProjectMilestone> findByProjectId(Long projectId);
+    
     // Find completed milestones by project
     List<ProjectMilestone> findByProjectIdAndIsCompleted(Long projectId, Boolean isCompleted);
     

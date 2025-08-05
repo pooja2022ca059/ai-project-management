@@ -48,4 +48,7 @@ public interface TaskService {
     List<TaskDTO> getOverdueTasks();
     
     List<TaskDTO> getUpcomingDeadlines(Integer days);
+    
+    // Kanban board operations
+    TaskDTO moveTaskToColumn(Long projectId, MoveTaskRequest moveRequest);
 }

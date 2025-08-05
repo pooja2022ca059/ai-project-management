@@ -65,4 +65,9 @@ public interface ProjectService {
      * Checks if the user has ever been a member of the project (active or inactive).
      */
     boolean isProjectMember(Long projectId, Long userId);
+    
+    /**
+     * Get project timeline data for Gantt chart visualization.
+     */
+    ProjectTimelineDto getProjectTimeline(Long projectId);
 }

@@ -12,7 +12,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 	    "com.aipm.ai_project_management.modules.clients.repository",
 	    "com.aipm.ai_project_management.modules.tasks.repository",
 	    "com.aipm.ai_project_management.modules.projects.repository",
-	    "com.aipm.ai_project_management.modules.team.repository"
+	    "com.aipm.ai_project_management.modules.team.repository",
+	    "com.aipm.ai_project_management.modules.ai.repository",
+	    "com.aipm.ai_project_management.modules.notifications.repository"
 	})
 @EntityScan(basePackages = {
 	    "com.aipm.ai_project_management.modules.auth.entity",
@@ -20,7 +22,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 	    "com.aipm.ai_project_management.modules.clients.entity",
 	    "com.aipm.ai_project_management.modules.tasks.entity",
 	    "com.aipm.ai_project_management.modules.projects.entity",
-	    "com.aipm.ai_project_management.modules.team.entity"
+	    "com.aipm.ai_project_management.modules.team.entity",
+	    "com.aipm.ai_project_management.modules.ai.entity",
+	    "com.aipm.ai_project_management.modules.notifications.entity"
 	})
 
 public class AiProjectManagementSoftwareApplication {
