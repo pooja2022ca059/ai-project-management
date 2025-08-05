@@ -8,6 +8,7 @@ com/aipm/ai_project_management/modules/users/repository/UserPreferenceRepository
 com/aipm/ai_project_management/modules/files/controller/FileUploadController$FileUploadResponseDTO.class
 com/aipm/ai_project_management/modules/auth/dto/RefreshTokenResponse.class
 com/aipm/ai_project_management/modules/projects/entity/ProjectMilestone.class
+com/aipm/ai_project_management/config/FileUploadConfig.class
 com/aipm/ai_project_management/modules/tasks/dto/TimeTrackingDTO.class
 com/aipm/ai_project_management/modules/team/mapper/TeamMapper.class
 com/aipm/ai_project_management/modules/dashboard/dto/admin/AdminAiInsightsDTO.class
@@ -27,6 +28,7 @@ com/aipm/ai_project_management/modules/shared/entity/AiInsightEntity$InsightPrio
 com/aipm/ai_project_management/modules/shared/entity/ProjectTemplateEntity.class
 com/aipm/ai_project_management/modules/team/entity/UserPerformance.class
 com/aipm/ai_project_management/config/WebConfig.class
+com/aipm/ai_project_management/modules/websocket/controller/WebSocketController.class
 com/aipm/ai_project_management/modules/projects/repository/ProjectDocumentRepository.class
 com/aipm/ai_project_management/modules/dashboard/service/impl/DashboardServiceImpl.class
 com/aipm/ai_project_management/modules/auth/security/JwtAuthenticationEntryPoint.class
@@ -63,6 +65,7 @@ com/aipm/ai_project_management/modules/projects/repository/ProjectRepository.cla
 com/aipm/ai_project_management/modules/shared/entity/AiInsightEntity$InsightStatus.class
 com/aipm/ai_project_management/modules/analytics/controller/AnalyticsController$ReportDTO.class
 com/aipm/ai_project_management/modules/tasks/dto/TaskBoardDTO.class
+com/aipm/ai_project_management/config/WebSocketConfig.class
 com/aipm/ai_project_management/modules/projects/entity/Project.class
 com/aipm/ai_project_management/modules/auth/repository/SessionRepository.class
 com/aipm/ai_project_management/modules/auth/dto/LogoutAllRequest$Builder.class
@@ -73,6 +76,7 @@ com/aipm/ai_project_management/modules/tasks/controller/TimeTrackingController.c
 com/aipm/ai_project_management/modules/tasks/dto/TaskDetailDTO$AttachmentDTO.class
 com/aipm/ai_project_management/modules/dashboard/dto/pm/PmProjectDTO.class
 com/aipm/ai_project_management/modules/team/entity/UserSkill.class
+com/aipm/ai_project_management/config/CachingConfig.class
 com/aipm/ai_project_management/modules/projects/dto/ProjectUpdateDto.class
 com/aipm/ai_project_management/common/response/PageResponse.class
 com/aipm/ai_project_management/common/exceptions/AIServiceException.class
