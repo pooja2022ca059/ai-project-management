@@ -34,6 +34,7 @@ com/aipm/ai_project_management/modules/team/repository/UserCertificationReposito
 com/aipm/ai_project_management/modules/team/entity/TeamMember$Status.class
 com/aipm/ai_project_management/modules/team/entity/TeamMember$Availability.class
 com/aipm/ai_project_management/modules/tasks/repository/SubtaskRepository.class
+com/aipm/ai_project_management/modules/templates/entity/TemplateTaskEntity.class
 com/aipm/ai_project_management/modules/auth/entity/UserSession.class
 com/aipm/ai_project_management/modules/team/mapper/ProjectSummaryMapper.class
 com/aipm/ai_project_management/modules/auth/dto/UserDto.class
@@ -50,6 +51,7 @@ com/aipm/ai_project_management/common/exceptions/UnauthorizedException.class
 com/aipm/ai_project_management/common/enums/UserRole.class
 com/aipm/ai_project_management/modules/projects/service/ProjectService.class
 com/aipm/ai_project_management/modules/auth/service/PasswordServiceImpl.class
+com/aipm/ai_project_management/modules/ai/entity/AiInsightEntity$InsightType.class
 com/aipm/ai_project_management/modules/dashboard/dto/admin/AdminRecentActivityDTO.class
 com/aipm/ai_project_management/modules/auth/dto/LoginResponse$UserDTO$Builder.class
 com/aipm/ai_project_management/modules/auth/security/JwtTokenProvider.class
@@ -83,7 +85,9 @@ com/aipm/ai_project_management/modules/auth/dto/ForgotPasswordRequest$Builder.cl
 com/aipm/ai_project_management/modules/projects/dto/ProjectTeamMemberDto.class
 com/aipm/ai_project_management/modules/auth/dto/LogoutRequest$Builder.class
 com/aipm/ai_project_management/modules/tasks/repository/TaskDependencyRepository.class
+com/aipm/ai_project_management/modules/notifications/entity/NotificationEntity$NotificationPriority.class
 com/aipm/ai_project_management/modules/dashboard/dto/team/TeamDashboardDTO.class
+com/aipm/ai_project_management/modules/ai/entity/AiInsightEntity$InsightStatus.class
 com/aipm/ai_project_management/modules/projects/entity/ProjectTeamMember.class
 com/aipm/ai_project_management/modules/auth/entity/User$UserStatus.class
 com/aipm/ai_project_management/modules/auth/service/JwtServiceImpl.class
@@ -111,6 +115,7 @@ com/aipm/ai_project_management/modules/auth/entity/PasswordResetToken.class
 com/aipm/ai_project_management/modules/dashboard/dto/team/TeamProjectTimelineDTO.class
 com/aipm/ai_project_management/config/JpaConfig$SpringSecurityAuditorAware.class
 com/aipm/ai_project_management/AiProjectManagementSoftwareApplication.class
+com/aipm/ai_project_management/modules/templates/entity/ProjectTemplateEntity.class
 com/aipm/ai_project_management/modules/auth/service/CustomUserDetailsService.class
 com/aipm/ai_project_management/modules/dashboard/dto/admin/AdminDashboardDTO.class
 com/aipm/ai_project_management/modules/dashboard/mapper/DashboardMapper.class
@@ -125,6 +130,7 @@ com/aipm/ai_project_management/common/response/ApiResponse$ApiResponseBuilder.cl
 com/aipm/ai_project_management/modules/users/entity/UserPreference$DigestFrequency.class
 com/aipm/ai_project_management/common/response/ErrorResponse$ErrorResponseBuilder.class
 com/aipm/ai_project_management/common/exceptions/ResourceNotFoundException.class
+com/aipm/ai_project_management/modules/templates/entity/ProjectTemplateEntity$TemplateCategory.class
 com/aipm/ai_project_management/modules/projects/repository/ProjectMilestoneRepository.class
 com/aipm/ai_project_management/modules/clients/repository/ClientCustomFieldRepository.class
 com/aipm/ai_project_management/modules/auth/entity/PasswordResetToken$Builder.class
@@ -138,6 +144,7 @@ com/aipm/ai_project_management/common/enums/ProjectPriority.class
 com/aipm/ai_project_management/modules/auth/service/JwtService.class
 com/aipm/ai_project_management/modules/tasks/dto/TaskBoardColumnDTO.class
 com/aipm/ai_project_management/modules/clients/entity/ClientContact.class
+com/aipm/ai_project_management/modules/ai/entity/AiInsightEntity$InsightPriority.class
 com/aipm/ai_project_management/modules/auth/entity/User.class
 com/aipm/ai_project_management/common/enums/TaskPriority.class
 com/aipm/ai_project_management/modules/tasks/dto/AttachmentDTO.class
@@ -149,12 +156,15 @@ com/aipm/ai_project_management/modules/clients/entity/Client$ClientStatus.class
 com/aipm/ai_project_management/common/enums/TaskStatus.class
 com/aipm/ai_project_management/modules/team/entity/UserCertification.class
 com/aipm/ai_project_management/modules/users/dto/UserSettingsDTO.class
+com/aipm/ai_project_management/modules/ai/entity/AutomationRuleEntity$RuleType.class
 com/aipm/ai_project_management/modules/projects/entity/ProjectDocument.class
 com/aipm/ai_project_management/modules/team/service/impl/TeamServiceImpl.class
 com/aipm/ai_project_management/modules/projects/dto/ProjectResponseDto.class
+com/aipm/ai_project_management/modules/notifications/entity/NotificationEntity.class
 com/aipm/ai_project_management/modules/dashboard/service/DashboardService.class
 com/aipm/ai_project_management/modules/team/mapper/SkillMapper.class
 com/aipm/ai_project_management/modules/auth/validation/PasswordValidator$ValidationResult.class
+com/aipm/ai_project_management/modules/ai/entity/AutomationRuleEntity$RulePriority.class
 com/aipm/ai_project_management/modules/auth/dto/LoginResponse$UserDTO.class
 com/aipm/ai_project_management/modules/dashboard/dto/admin/AdminDeadlinePredictionDTO.class
 com/aipm/ai_project_management/modules/auth/service/AuthServiceImpl.class
@@ -171,6 +181,7 @@ com/aipm/ai_project_management/modules/users/entity/UserPreference.class
 com/aipm/ai_project_management/common/enums/ProjectRiskLevel.class
 com/aipm/ai_project_management/modules/tasks/dto/CreateTaskRequest.class
 com/aipm/ai_project_management/modules/team/dto/TeamMemberDTO.class
+com/aipm/ai_project_management/modules/ai/entity/AutomationRuleEntity.class
 com/aipm/ai_project_management/modules/clients/service/ClientService.class
 com/aipm/ai_project_management/modules/projects/controller/ProjectController.class
 com/aipm/ai_project_management/modules/team/dto/ManagerDTO.class
@@ -182,6 +193,7 @@ com/aipm/ai_project_management/modules/auth/dto/LogoutAllRequest.class
 com/aipm/ai_project_management/modules/clients/repository/ClientContactRepository.class
 com/aipm/ai_project_management/modules/team/repository/UserPerformanceRepository.class
 com/aipm/ai_project_management/modules/clients/dto/ClientDTO.class
+com/aipm/ai_project_management/modules/notifications/entity/NotificationEntity$NotificationType.class
 com/aipm/ai_project_management/modules/team/dto/ProjectSummaryDTO.class
 com/aipm/ai_project_management/config/JpaConfig.class
 com/aipm/ai_project_management/modules/team/controller/TeamController.class
@@ -190,6 +202,7 @@ com/aipm/ai_project_management/modules/clients/entity/ClientCustomField.class
 com/aipm/ai_project_management/modules/tasks/dto/TaskDetailDTO.class
 com/aipm/ai_project_management/modules/tasks/dto/TaskDTO.class
 com/aipm/ai_project_management/modules/tasks/dto/CreateCommentRequest.class
+com/aipm/ai_project_management/modules/templates/entity/TemplateMilestoneEntity.class
 com/aipm/ai_project_management/modules/team/mapper/TeamMemberMapper.class
 com/aipm/ai_project_management/modules/auth/dto/RefreshTokenRequest.class
 com/aipm/ai_project_management/modules/clients/dto/UpdateClientRequest.class
@@ -199,8 +212,10 @@ com/aipm/ai_project_management/modules/clients/repository/ClientAddressRepositor
 com/aipm/ai_project_management/modules/clients/service/ClientServiceImpl.class
 com/aipm/ai_project_management/modules/users/dto/UpdateUserSettingsRequest.class
 com/aipm/ai_project_management/common/response/SuccessResponse.class
+com/aipm/ai_project_management/modules/notifications/repository/NotificationRepository.class
 com/aipm/ai_project_management/modules/tasks/entity/TimeTracking.class
 com/aipm/ai_project_management/modules/auth/validation/PasswordValidator.class
+com/aipm/ai_project_management/modules/ai/entity/AiInsightEntity.class
 com/aipm/ai_project_management/modules/clients/dto/ClientContactDTO.class
 com/aipm/ai_project_management/modules/clients/entity/Client.class
 com/aipm/ai_project_management/shared/audit/AuditableEntity.class
