@@ -4,6 +4,7 @@ import com.aipm.ai_project_management.common.response.ApiResponse;
 import com.aipm.ai_project_management.modules.projects.dto.*;
 import com.aipm.ai_project_management.modules.projects.service.ProjectService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/projects")
+@Tag(name = "Projects", description = "Project management APIs")
 public class ProjectController {
     
     private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
@@ -33,6 +35,13 @@ public class ProjectController {
     // CREATE PROJECT
     @PostMapping
     @PreAuthorize("hasRole('ADMIN') or hasRole('PROJECT_MANAGER')")
+    @Operation(summary = "Create a new project", description = "Create a new project with specified details")
+    @io.swagger.v3.oas.annotations.responses.ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Project created successfully"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized - Invalid credentials"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Forbidden - Insufficient permissions")
+    })
     public ResponseEntity<ApiResponse<ProjectResponseDto>> createProject(
             @Valid @RequestBody ProjectCreateDto createDto) {
         logger.info("POST /api/projects - Creating new project: {}", createDto.getName());
@@ -63,6 +72,13 @@ public class ProjectController {
     // GET PROJECT BY ID
     @GetMapping("/{projectId}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('PROJECT_MANAGER') or hasRole('TEAM_LEAD') or hasRole('DEVELOPER')")
+    @Operation(summary = "Get project by ID", description = "Retrieve detailed information about a specific project")
+    @io.swagger.v3.oas.annotations.responses.ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Project retrieved successfully"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Project not found"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized - Invalid credentials"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Forbidden - Insufficient permissions")
+    })
     public ResponseEntity<ApiResponse<ProjectResponseDto>> getProjectById(@PathVariable Long projectId) {
         logger.info("GET /api/projects/{} - Fetching project details", projectId);
         

@@ -188,6 +188,7 @@ com/aipm/ai_project_management/modules/ai/service/AiService.class
 com/aipm/ai_project_management/modules/projects/entity/ProjectDocument.class
 com/aipm/ai_project_management/modules/projects/dto/ProjectTimelineDto$TimelineMilestone.class
 com/aipm/ai_project_management/modules/team/service/impl/TeamServiceImpl.class
+com/aipm/ai_project_management/config/SwaggerConfig.class
 com/aipm/ai_project_management/modules/projects/dto/ProjectResponseDto.class
 com/aipm/ai_project_management/modules/notifications/entity/NotificationEntity.class
 com/aipm/ai_project_management/modules/dashboard/service/DashboardService.class

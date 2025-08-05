@@ -4,6 +4,8 @@ import com.aipm.ai_project_management.common.response.ApiResponse;
 import com.aipm.ai_project_management.modules.auth.entity.User;
 import com.aipm.ai_project_management.modules.users.dto.UserDTO;
 import com.aipm.ai_project_management.modules.users.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/admin/users")
 @PreAuthorize("hasRole('ADMIN')")
+@Tag(name = "User Management", description = "Admin APIs for user management")
 public class UserController {
     
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -25,6 +28,13 @@ public class UserController {
     private UserService userService;
     
     @PutMapping("/{userId}/status")
+    @Operation(summary = "Update user status", description = "Update the status of a specific user (Admin only)")
+    @io.swagger.v3.oas.annotations.responses.ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "User status updated successfully"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "User not found"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized - Invalid credentials"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Forbidden - Admin access required")
+    })
     public ResponseEntity<ApiResponse<UserDTO>> updateUserStatus(
             @PathVariable Long userId,
             @RequestParam User.UserStatus status) {
