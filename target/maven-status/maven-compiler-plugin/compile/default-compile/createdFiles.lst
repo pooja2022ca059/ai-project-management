@@ -8,6 +8,7 @@ com/aipm/ai_project_management/modules/users/repository/UserPreferenceRepository
 com/aipm/ai_project_management/modules/activity/entity/ActivityFeedEntity.class
 com/aipm/ai_project_management/modules/auth/dto/RefreshTokenResponse.class
 com/aipm/ai_project_management/modules/projects/entity/ProjectMilestone.class
+com/aipm/ai_project_management/config/FileUploadConfig.class
 com/aipm/ai_project_management/modules/tasks/dto/TimeTrackingDTO.class
 com/aipm/ai_project_management/modules/team/mapper/TeamMapper.class
 com/aipm/ai_project_management/modules/dashboard/dto/admin/AdminAiInsightsDTO.class
@@ -26,6 +27,7 @@ com/aipm/ai_project_management/modules/tasks/dto/CreateTaskRequest$SubtaskReques
 com/aipm/ai_project_management/modules/team/entity/UserPerformance.class
 com/aipm/ai_project_management/config/WebConfig.class
 com/aipm/ai_project_management/modules/notifications/service/impl/NotificationServiceImpl.class
+com/aipm/ai_project_management/modules/files/service/FileStorageService.class
 com/aipm/ai_project_management/modules/projects/repository/ProjectDocumentRepository.class
 com/aipm/ai_project_management/modules/dashboard/service/impl/DashboardServiceImpl.class
 com/aipm/ai_project_management/modules/ai/service/AutomationRuleService$RuleExecutionStats.class
@@ -124,6 +126,7 @@ com/aipm/ai_project_management/modules/auth/dto/RefreshTokenResponse$Builder.cla
 com/aipm/ai_project_management/config/SecurityConfig.class
 com/aipm/ai_project_management/modules/tasks/dto/TaskBoardDTO$TaskColumnDTO.class
 com/aipm/ai_project_management/modules/users/service/UserServiceImpl$1.class
+com/aipm/ai_project_management/modules/files/service/FileStorageService$FileStats.class
 com/aipm/ai_project_management/modules/auth/entity/PasswordResetToken.class
 com/aipm/ai_project_management/modules/dashboard/dto/team/TeamProjectTimelineDTO.class
 com/aipm/ai_project_management/config/JpaConfig$SpringSecurityAuditorAware.class
@@ -207,8 +210,10 @@ com/aipm/ai_project_management/modules/clients/service/ClientService.class
 com/aipm/ai_project_management/modules/projects/controller/ProjectController.class
 com/aipm/ai_project_management/modules/team/dto/ManagerDTO.class
 com/aipm/ai_project_management/modules/auth/security/JwtAuthenticationFilter.class
+com/aipm/ai_project_management/modules/files/dto/FileAttachmentDTO.class
 com/aipm/ai_project_management/modules/team/mapper/CertificationMapper.class
 com/aipm/ai_project_management/modules/auth/service/PasswordService.class
+com/aipm/ai_project_management/modules/files/entity/FileAttachment$StorageType.class
 com/aipm/ai_project_management/modules/auth/entity/User$Builder.class
 com/aipm/ai_project_management/modules/auth/dto/LogoutAllRequest.class
 com/aipm/ai_project_management/modules/clients/repository/ClientContactRepository.class
@@ -230,6 +235,7 @@ com/aipm/ai_project_management/modules/team/mapper/TeamMemberMapper.class
 com/aipm/ai_project_management/modules/auth/dto/RefreshTokenRequest.class
 com/aipm/ai_project_management/modules/clients/dto/UpdateClientRequest.class
 com/aipm/ai_project_management/modules/team/dto/TeamMemberDTO$Availability.class
+com/aipm/ai_project_management/modules/files/entity/FileAttachment.class
 com/aipm/ai_project_management/modules/auth/validation/AuthValidator.class
 com/aipm/ai_project_management/modules/clients/repository/ClientAddressRepository.class
 com/aipm/ai_project_management/modules/clients/service/ClientServiceImpl.class
