@@ -496,4 +496,39 @@ public class TaskServiceImpl implements TaskService {
                 .map(this::convertToTaskDTO)
                 .collect(Collectors.toList());
     }
+    
+    @Override
+    public TaskDTO moveTaskToColumn(Long projectId, MoveTaskRequest moveRequest) {
+        logger.info("Moving task " + moveRequest.getTaskId() + " to status " + moveRequest.getTargetStatus() + " for project " + projectId);
+        
+        // Get the task
+        Task task = taskRepository.findById(moveRequest.getTaskId())
+                .orElseThrow(() -> new RuntimeException("Task not found with id: " + moveRequest.getTaskId()));
+        
+        // Verify task belongs to the project
+        if (!task.getProjectId().equals(projectId)) {
+            throw new RuntimeException("Task does not belong to the specified project");
+        }
+        
+        // Convert string status to TaskStatus enum
+        TaskStatus targetStatus;
+        try {
+            targetStatus = TaskStatus.valueOf(moveRequest.getTargetStatus().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid task status: " + moveRequest.getTargetStatus());
+        }
+        
+        // Update the task status
+        task.setStatus(targetStatus);
+        
+        // If moving to DONE, set completion date
+        if (targetStatus == TaskStatus.DONE) {
+            task.setProgress(100);
+        }
+        
+        Task savedTask = taskRepository.save(task);
+        
+        logger.info("Task " + task.getId() + " moved to status " + targetStatus + " successfully");
+        return convertToTaskDTO(savedTask);
+    }
 }

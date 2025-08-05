@@ -18,6 +18,7 @@ com/aipm/ai_project_management/modules/auth/dto/RegisterRequest.class
 com/aipm/ai_project_management/modules/auth/dto/ForgotPasswordRequest.class
 com/aipm/ai_project_management/modules/tasks/entity/Task.class
 com/aipm/ai_project_management/modules/tasks/service/TimeTrackingService.class
+com/aipm/ai_project_management/modules/tasks/dto/KanbanBoardDto.class
 com/aipm/ai_project_management/modules/auth/dto/RefreshTokenRequest$Builder.class
 com/aipm/ai_project_management/modules/clients/dto/CreateClientRequest.class
 com/aipm/ai_project_management/modules/team/mapper/ManagerMapper.class
@@ -131,6 +132,7 @@ com/aipm/ai_project_management/modules/users/service/UserServiceImpl$1.class
 com/aipm/ai_project_management/modules/files/service/FileStorageService$FileStats.class
 com/aipm/ai_project_management/modules/auth/entity/PasswordResetToken.class
 com/aipm/ai_project_management/modules/dashboard/dto/team/TeamProjectTimelineDTO.class
+com/aipm/ai_project_management/modules/tasks/dto/MoveTaskRequest.class
 com/aipm/ai_project_management/config/JpaConfig$SpringSecurityAuditorAware.class
 com/aipm/ai_project_management/AiProjectManagementSoftwareApplication.class
 com/aipm/ai_project_management/modules/templates/entity/ProjectTemplateEntity.class
@@ -140,10 +142,12 @@ com/aipm/ai_project_management/modules/dashboard/mapper/DashboardMapper.class
 com/aipm/ai_project_management/modules/tasks/repository/TaskCommentRepository.class
 com/aipm/ai_project_management/modules/team/mapper/PerformanceMapper.class
 com/aipm/ai_project_management/modules/auth/service/AuthService.class
+com/aipm/ai_project_management/modules/tasks/dto/KanbanBoardDto$KanbanTask.class
 com/aipm/ai_project_management/modules/auth/dto/LogoutRequest.class
 com/aipm/ai_project_management/modules/auth/repository/PasswordResetTokenRepository.class
 com/aipm/ai_project_management/modules/team/dto/CertificationDTO.class
 com/aipm/ai_project_management/modules/projects/dto/ProjectCreateDto.class
+com/aipm/ai_project_management/modules/tasks/dto/KanbanBoardDto$KanbanColumn.class
 com/aipm/ai_project_management/common/response/ApiResponse$ApiResponseBuilder.class
 com/aipm/ai_project_management/modules/users/entity/UserPreference$DigestFrequency.class
 com/aipm/ai_project_management/common/response/ErrorResponse$ErrorResponseBuilder.class

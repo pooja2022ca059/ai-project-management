@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.aipm.ai_project_management.modules.auth.service.PasswordServiceTest" time="9.32" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.aipm.ai_project_management.modules.projects.service.ProjectTimelineServiceTest" time="0.102" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -59,99 +59,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="testPasswordStrengthEvaluation" classname="com.aipm.ai_project_management.modules.auth.service.PasswordServiceTest" time="0.449">
-    <system-out><![CDATA[Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
-17:24:29.038 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.aipm.ai_project_management.modules.auth.service.PasswordServiceTest]: PasswordServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-17:24:29.181 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.aipm.ai_project_management.AiProjectManagementSoftwareApplication for test class com.aipm.ai_project_management.modules.auth.service.PasswordServiceTest
-17:24:29.319 [main] INFO org.springframework.boot.devtools.restart.RestartApplicationListener -- Restart disabled due to context in which it is running
-
-  .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::                (v3.1.5)
-
-2025-08-05T17:24:29.548Z  INFO 5667 --- [           main] c.a.a.m.a.service.PasswordServiceTest    : Starting PasswordServiceTest using Java 17.0.16 with PID 5667 (started by runner in /home/runner/work/ai-project-management/ai-project-management)
-2025-08-05T17:24:29.549Z  INFO 5667 --- [           main] c.a.a.m.a.service.PasswordServiceTest    : The following 1 profile is active: "test"
-2025-08-05T17:24:29.585Z DEBUG 5667 --- [           main] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@600b0b7
-2025-08-05T17:24:31.426Z  INFO 5667 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-08-05T17:24:31.458Z  INFO 5667 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.13.Final
-2025-08-05T17:24:31.460Z  INFO 5667 --- [           main] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
-2025-08-05T17:24:31.902Z  WARN 5667 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-08-05T17:24:33.241Z  INFO 5667 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-08-05T17:24:36.282Z  WARN 5667 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-08-05T17:24:36.437Z  INFO 5667 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3aa6fef3, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@31429a0a, org.springframework.security.web.context.SecurityContextHolderFilter@343047c, org.springframework.security.web.header.HeaderWriterFilter@9a8b7d3, org.springframework.web.filter.CorsFilter@119ec2e4, org.springframework.security.web.authentication.logout.LogoutFilter@2dd246ff, com.aipm.ai_project_management.modules.auth.security.JwtAuthenticationFilter@5ab780ce, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@291be813, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4fe03311, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2acf4eed, org.springframework.security.web.session.SessionManagementFilter@171fd7e5, org.springframework.security.web.access.ExceptionTranslationFilter@63ca10f7, org.springframework.security.web.access.intercept.AuthorizationFilter@7fce8421]
-2025-08-05T17:24:36.493Z DEBUG 5667 --- [           main] o.s.w.s.s.s.WebSocketHandlerMapping      : Patterns [/ws/**, /websocket] in 'stompWebSocketHandlerMapping'
-2025-08-05T17:24:36.541Z DEBUG 5667 --- [           main] .WebSocketAnnotationMethodMessageHandler : 
-	c.a.a.m.a.c.AiConsoleController:
-	
-2025-08-05T17:24:36.542Z DEBUG 5667 --- [           main] .WebSocketAnnotationMethodMessageHandler : 
-	c.a.a.m.a.c.AuthController:
-	
-2025-08-05T17:24:36.542Z DEBUG 5667 --- [           main] .WebSocketAnnotationMethodMessageHandler : 
-	c.a.a.m.a.c.PasswordController:
-	
-2025-08-05T17:24:36.542Z DEBUG 5667 --- [           main] .WebSocketAnnotationMethodMessageHandler : 
-	c.a.a.m.c.c.ClientController:
-	
-2025-08-05T17:24:36.542Z DEBUG 5667 --- [           main] .WebSocketAnnotationMethodMessageHandler : 
-	c.a.a.m.d.c.DashboardController:
-	
-2025-08-05T17:24:36.543Z DEBUG 5667 --- [           main] .WebSocketAnnotationMethodMessageHandler : 
-	c.a.a.m.n.c.NotificationController:
-	
-2025-08-05T17:24:36.543Z DEBUG 5667 --- [           main] .WebSocketAnnotationMethodMessageHandler : 
-	c.a.a.m.p.c.ProjectController:
-	
-2025-08-05T17:24:36.543Z DEBUG 5667 --- [           main] .WebSocketAnnotationMethodMessageHandler : 
-	c.a.a.m.t.c.TaskCommentController:
-	
-2025-08-05T17:24:36.543Z DEBUG 5667 --- [           main] .WebSocketAnnotationMethodMessageHandler : 
-	c.a.a.m.t.c.TaskController:
-	
-2025-08-05T17:24:36.543Z DEBUG 5667 --- [           main] .WebSocketAnnotationMethodMessageHandler : 
-	c.a.a.m.t.c.TimeTrackingController:
-	
-2025-08-05T17:24:36.544Z DEBUG 5667 --- [           main] .WebSocketAnnotationMethodMessageHandler : 
-	c.a.a.m.t.c.TeamController:
-	
-2025-08-05T17:24:36.544Z DEBUG 5667 --- [           main] .WebSocketAnnotationMethodMessageHandler : 
-	c.a.a.m.u.c.UserController:
-	
-2025-08-05T17:24:36.544Z DEBUG 5667 --- [           main] .WebSocketAnnotationMethodMessageHandler : 
-	c.a.a.m.u.c.UserProfileController:
-	
-2025-08-05T17:24:36.544Z DEBUG 5667 --- [           main] .WebSocketAnnotationMethodMessageHandler : 
-	c.a.a.m.u.c.UserSettingsController:
-	
-2025-08-05T17:24:36.546Z DEBUG 5667 --- [           main] .WebSocketAnnotationMethodMessageHandler : 
-	o.s.b.a.w.s.e.BasicErrorController:
-	
-2025-08-05T17:24:36.550Z DEBUG 5667 --- [           main] .WebSocketAnnotationMethodMessageHandler : 
-	o.s.w.a.OpenApiWebMvcResource:
-	
-2025-08-05T17:24:36.550Z DEBUG 5667 --- [           main] .WebSocketAnnotationMethodMessageHandler : 
-	o.s.w.u.SwaggerWelcomeWebMvc:
-	
-2025-08-05T17:24:36.551Z DEBUG 5667 --- [           main] .WebSocketAnnotationMethodMessageHandler : 
-	o.s.w.u.SwaggerConfigResource:
-	
-2025-08-05T17:24:36.803Z DEBUG 5667 --- [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-08-05T17:24:36.894Z DEBUG 5667 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 122 mappings in 'requestMappingHandlerMapping'
-2025-08-05T17:24:36.932Z DEBUG 5667 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
-2025-08-05T17:24:36.958Z DEBUG 5667 --- [           main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice
-2025-08-05T17:24:37.687Z DEBUG 5667 --- [           main] org.springframework.web.SimpLogging      : clientOutboundChannel added SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
-2025-08-05T17:24:37.687Z DEBUG 5667 --- [           main] org.springframework.web.SimpLogging      : clientInboundChannel added WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
-2025-08-05T17:24:37.688Z  INFO 5667 --- [           main] org.springframework.web.SimpLogging      : Starting...
-2025-08-05T17:24:37.688Z DEBUG 5667 --- [           main] org.springframework.web.SimpLogging      : clientInboundChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@2ec5b8]
-2025-08-05T17:24:37.689Z DEBUG 5667 --- [           main] org.springframework.web.SimpLogging      : brokerChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@2ec5b8]
-2025-08-05T17:24:37.689Z  INFO 5667 --- [           main] org.springframework.web.SimpLogging      : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@2ec5b8]]
-2025-08-05T17:24:37.690Z  INFO 5667 --- [           main] org.springframework.web.SimpLogging      : Started.
-2025-08-05T17:24:37.690Z DEBUG 5667 --- [           main] org.springframework.web.SimpLogging      : clientInboundChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
-2025-08-05T17:24:37.690Z DEBUG 5667 --- [           main] org.springframework.web.SimpLogging      : brokerChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
-2025-08-05T17:24:37.709Z  INFO 5667 --- [           main] c.a.a.m.a.service.PasswordServiceTest    : Started PasswordServiceTest in 8.4 seconds (process running for 9.357)
-]]></system-out>
-  </testcase>
+  <testcase name="testGetProjectTimelineWithInvalidId" classname="com.aipm.ai_project_management.modules.projects.service.ProjectTimelineServiceTest" time="0.073"/>
 </testsuite>
