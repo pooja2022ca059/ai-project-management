@@ -48,4 +48,17 @@ public interface NotificationRepository extends JpaRepository<NotificationEntity
 
     // Find notifications by priority
     List<NotificationEntity> findByRecipientIdAndPriorityOrderByCreatedAtDesc(Long recipientId, NotificationEntity.NotificationPriority priority);
+    
+    // Find unread notifications without pagination
+    List<NotificationEntity> findByRecipientIdAndIsReadFalse(Long recipientId);
+    
+    // Delete notifications by recipient
+    @Modifying
+    @Query("DELETE FROM NotificationEntity n WHERE n.recipientId = :recipientId")
+    long deleteByRecipientId(@Param("recipientId") Long recipientId);
+    
+    // Delete notifications older than specified date
+    @Modifying
+    @Query("DELETE FROM NotificationEntity n WHERE n.createdAt < :cutoffDate")
+    long deleteByCreatedAtBefore(@Param("cutoffDate") LocalDateTime cutoffDate);
 }
