@@ -10,6 +10,10 @@ import com.aipm.ai_project_management.modules.projects.entity.ProjectTeamMember;
 import com.aipm.ai_project_management.modules.projects.repository.ProjectRepository;
 import com.aipm.ai_project_management.modules.projects.repository.ProjectMilestoneRepository;
 import com.aipm.ai_project_management.modules.projects.repository.ProjectTeamMemberRepository;
+import com.aipm.ai_project_management.modules.tasks.repository.TaskRepository;
+import com.aipm.ai_project_management.modules.tasks.repository.TaskDependencyRepository;
+import com.aipm.ai_project_management.modules.tasks.entity.Task;
+import com.aipm.ai_project_management.modules.tasks.entity.TaskDependency;
 import com.aipm.ai_project_management.modules.projects.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +42,12 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private TaskRepository taskRepository;
+    
+    @Autowired
+    private TaskDependencyRepository taskDependencyRepository;
 
     @Override
     public ProjectResponseDto createProject(ProjectCreateDto createDto, Long currentUserId) {
@@ -607,5 +618,89 @@ public class ProjectServiceImpl implements ProjectService {
         } else {
             return "Healthy";
         }
+    }
+    
+    @Override
+    public ProjectTimelineDto getProjectTimeline(Long projectId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new RuntimeException("Project not found"));
+        
+        // Get project tasks
+        List<Task> tasks = taskRepository.findByProjectId(projectId);
+        List<ProjectTimelineDto.TimelineTask> timelineTasks = tasks.stream()
+                .map(this::convertToTimelineTask)
+                .collect(Collectors.toList());
+        
+        // Get project milestones
+        List<ProjectMilestone> milestones = milestoneRepository.findByProjectId(projectId);
+        List<ProjectTimelineDto.TimelineMilestone> timelineMilestones = milestones.stream()
+                .map(this::convertToTimelineMilestone)
+                .collect(Collectors.toList());
+        
+        // Calculate project progress
+        double progress = calculateProjectProgress(project);
+        
+        return new ProjectTimelineDto(
+                project.getId(),
+                project.getName(),
+                project.getStartDate(),
+                project.getEndDate(),
+                project.getStatus().name(),
+                progress,
+                timelineTasks,
+                timelineMilestones
+        );
+    }
+    
+    private ProjectTimelineDto.TimelineTask convertToTimelineTask(Task task) {
+        // Get task dependencies
+        List<Long> dependencies = taskDependencyRepository.findByDependentTaskId(task.getId())
+                .stream()
+                .map(dep -> dep.getDependencyTask().getId())
+                .collect(Collectors.toList());
+        
+        // Get assigned user name
+        String assignedTo = task.getAssigneeId() != null ? 
+                userRepository.findById(task.getAssigneeId())
+                        .map(user -> user.getName())
+                        .orElse("Unassigned") : "Unassigned";
+        
+        return new ProjectTimelineDto.TimelineTask(
+                task.getId(),
+                task.getTitle(),
+                task.getDescription(),
+                null, // startDate - Task entity doesn't seem to have this field
+                task.getDueDate() != null ? task.getDueDate().toLocalDate() : null,
+                task.getStatus().name(),
+                task.getProgress() != null ? task.getProgress().doubleValue() : 0.0,
+                task.getPriority().name(),
+                assignedTo,
+                dependencies
+        );
+    }
+    
+    private ProjectTimelineDto.TimelineMilestone convertToTimelineMilestone(ProjectMilestone milestone) {
+        return new ProjectTimelineDto.TimelineMilestone(
+                milestone.getId(),
+                milestone.getName(),
+                milestone.getDescription(),
+                milestone.getDueDate(),
+                milestone.getIsCompleted() != null && milestone.getIsCompleted() ? "COMPLETED" : "PENDING",
+                milestone.getCompletedDate()
+        );
+    }
+    
+    private double calculateProjectProgress(Project project) {
+        List<Task> tasks = taskRepository.findByProjectId(project.getId());
+        if (tasks.isEmpty()) {
+            return 0.0;
+        }
+        
+        double totalProgress = tasks.stream()
+                .mapToDouble(task -> task.getProgress() != null ? 
+                        task.getProgress().doubleValue() : 0.0)
+                .sum();
+        
+        return totalProgress / tasks.size();
     }
 }

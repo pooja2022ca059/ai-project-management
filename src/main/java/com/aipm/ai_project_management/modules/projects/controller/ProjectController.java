@@ -3,6 +3,7 @@ package com.aipm.ai_project_management.modules.projects.controller;
 import com.aipm.ai_project_management.common.response.ApiResponse;
 import com.aipm.ai_project_management.modules.projects.dto.*;
 import com.aipm.ai_project_management.modules.projects.service.ProjectService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -429,6 +430,17 @@ public class ProjectController {
         
         logger.info("Total projects count: {}", stats.getTotalProjects());
         return ResponseEntity.ok(ApiResponse.success(stats.getTotalProjects()));
+    }
+    
+    @GetMapping("/{projectId}/timeline")
+    @Operation(summary = "Get project timeline", description = "Get Gantt chart timeline data for a project")
+    public ResponseEntity<ApiResponse<ProjectTimelineDto>> getProjectTimeline(
+            @PathVariable Long projectId) {
+        
+        logger.info("Getting timeline for project: {}", projectId);
+        ProjectTimelineDto timeline = projectService.getProjectTimeline(projectId);
+        
+        return ResponseEntity.ok(ApiResponse.success("Project timeline retrieved successfully", timeline));
     }
     
     // Helper method to extract user ID from authentication

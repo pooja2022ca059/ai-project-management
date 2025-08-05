@@ -106,6 +106,7 @@ com/aipm/ai_project_management/modules/projects/entity/ProjectTeamMember.class
 com/aipm/ai_project_management/modules/auth/entity/User$UserStatus.class
 com/aipm/ai_project_management/modules/auth/service/JwtServiceImpl.class
 com/aipm/ai_project_management/modules/tasks/entity/Subtask.class
+com/aipm/ai_project_management/modules/projects/dto/ProjectTimelineDto.class
 com/aipm/ai_project_management/modules/auth/dto/RegisterRequest$Builder.class
 com/aipm/ai_project_management/modules/dashboard/dto/pm/PmUpcomingDeadlineDTO.class
 com/aipm/ai_project_management/common/response/ApiResponse.class
@@ -181,6 +182,7 @@ com/aipm/ai_project_management/modules/ai/service/AiService$AiInsightStats.class
 com/aipm/ai_project_management/modules/ai/entity/AutomationRuleEntity$RuleType.class
 com/aipm/ai_project_management/modules/ai/service/AiService.class
 com/aipm/ai_project_management/modules/projects/entity/ProjectDocument.class
+com/aipm/ai_project_management/modules/projects/dto/ProjectTimelineDto$TimelineMilestone.class
 com/aipm/ai_project_management/modules/team/service/impl/TeamServiceImpl.class
 com/aipm/ai_project_management/modules/projects/dto/ProjectResponseDto.class
 com/aipm/ai_project_management/modules/notifications/entity/NotificationEntity.class
@@ -237,6 +239,7 @@ com/aipm/ai_project_management/modules/team/mapper/TeamMemberMapper.class
 com/aipm/ai_project_management/modules/auth/dto/RefreshTokenRequest.class
 com/aipm/ai_project_management/modules/clients/dto/UpdateClientRequest.class
 com/aipm/ai_project_management/modules/team/dto/TeamMemberDTO$Availability.class
+com/aipm/ai_project_management/modules/projects/dto/ProjectTimelineDto$TimelineTask.class
 com/aipm/ai_project_management/modules/files/entity/FileAttachment.class
 com/aipm/ai_project_management/modules/auth/validation/AuthValidator.class
 com/aipm/ai_project_management/modules/clients/repository/ClientAddressRepository.class
